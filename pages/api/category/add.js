@@ -28,15 +28,30 @@ export default async function handler(req, res){
         }
         const db = client.db();
 
+        // Check if Category already exists in DB 
+        const categoryFromDB = await db
+            .collection('Category')
+            .find({ name: name })
+            .toArray();
+        const isCategoryExisting = JSON.parse(JSON.stringify(categoryFromDB)).length ? true : false;
+
         // Insert new Category 
-        try{
-            await db.collection('Category').insertOne(newCategory);
-        } catch (error) {
+        if(!isCategoryExisting){
+            try{
+                await db.collection('Category').insertOne(newCategory);
+            } catch (error) {
+                client.close();
+                res.status(500).json({
+                    message: 'Un problème est survenu.'
+                });
+            }
+        } else {
             client.close();
             res.status(500).json({
-                message: 'Un problème est survenu.'
+                message: `La catégorie ${name} existe déjà`
             });
         }
+        
 
         // Success
         client.close();

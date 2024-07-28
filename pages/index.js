@@ -24,7 +24,7 @@ export default function Home() {
       <h1>Le Pense-Bête de Beneli</h1>
       <h3>DEV : TO DO</h3>
       <ul>
-        <li>Ajouter une Catégorie</li>
+        <li><strike>Ajouter une Catégorie</strike></li>
         <li><strike>Afficher toutes les catégories</strike></li>
         <li>Supprimer une catégorie</li>
         <li>Ajouter une tâche</li>
